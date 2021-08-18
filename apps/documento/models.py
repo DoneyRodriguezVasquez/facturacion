@@ -8,7 +8,7 @@ class Emisor(models.Model):
     identificacion = models.CharField('Identificación',max_length=200, blank=False, null=False)
     num_identificacion = models.IntegerField('Numero de Identificación', blank=False, null=False)
     tipo_identificacion = models.IntegerField('Tipo de Identificación',blank=False, null=False)
-    nombre_comercial = models.CharField('Nombre Comercial',max_length=500, blank=False, null=False)
+    nombre_comercial = models.CharField('Nombre Comercial',max_length=500)
     ubicacion = models.CharField('Ubicación',max_length=500, null=False, blank=False)
     provincia = models.CharField('Provincia',max_length=200, blank=False, null=False)
     canton = models.CharField('Cantón',max_length=200, blank=False, null=False)
@@ -31,7 +31,7 @@ class Receptor(models.Model):
     identificacion = models.CharField('Identificación',max_length=200, blank=False, null=False)
     num_identificacion = models.IntegerField('Numero de Identificación', blank=False, null=False)
     tipo_identificacion = models.IntegerField('Tipo de Identificación',blank=False, null=False)
-    nombre_comercial = models.CharField('Nombre Comercial',max_length=500, blank=False, null=False)
+    nombre_comercial = models.CharField('Nombre Comercial',max_length=500)
     ubicacion = models.CharField('Ubicación',max_length=500, null=False, blank=False)
     provincia = models.CharField('Provincia',max_length=200, blank=False, null=False)
     canton = models.CharField('Cantón',max_length=200, blank=False, null=False)
@@ -44,9 +44,6 @@ class Receptor(models.Model):
         verbose_name = 'Receptor'
         verbose_name_plural = 'Receptores'
         ordering = ['nombre']
-
-    def __str__(self):
-        return self.nombre 
 
 class Detalle(models.Model):
     id = models.AutoField(primary_key=True)
@@ -106,5 +103,3 @@ class Factura(models.Model):
         verbose_name = 'Factura'
         verbose_name_plural = 'Facturas'
     
-    def __str__(self):
-            return self.Receptor 
