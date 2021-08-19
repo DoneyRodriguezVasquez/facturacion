@@ -59,10 +59,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
-    """ 
+    
     def __str__(self):
-        return f'{self.nombre} {self.apellidos}' 
-        """
+        return f'{self.email} {self.nombre} {self.apellidos}' 
+        
 
     def has_perm(self, perm, obj = None):
         return True

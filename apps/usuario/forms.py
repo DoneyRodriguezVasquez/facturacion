@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 from apps.usuario.models import Usuario
 
 
@@ -84,5 +85,32 @@ class UserForm(forms.ModelForm):
         return user 
 
 
+class LoginForm(forms.ModelForm):
+    password = forms.CharField(label="Contraseña", widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'Escriba su contraseña',
+            'id': 'password',
+            'required': 'required',
+        }
+    ))
 
+    class Meta:
+        model = Usuario
+        fields = ('email', 'password')
+        widgets = {
+            'email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'placeholder': 'Ingrese su email',
+                }
+            ),
+        }
+    def clean(self):
+        if self.is_valid():
+            email = self.cleaned_data['email']
+            password = self.cleaned_data['password']
+
+            if not authenticate(email=email, password=password):
+                raise forms.ValidationError("Credenciales invalidas")
 
