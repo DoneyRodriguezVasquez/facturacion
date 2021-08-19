@@ -18,14 +18,14 @@ from django.urls import path, include
 from django.contrib.auth.decorators import login_required
 from apps.documento.views import Documento
 from apps.home.views import Home
-from apps.usuario.views import login, logout
+from apps.usuario.views import login_view, logout_view
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home.as_view(), name='home'), 
-    path('accounts/login/', login, name='login'),
-    path('logout/', login_required(logout), name='logout'),
+    path('accounts/login/', login_view, name='login'),
+    path('logout/', login_required(logout_view), name='logout'),
     path('usuario/', include(('apps.usuario.urls', 'usuario'))), 
     path('documento/', login_required(Documento), name='producto'),
 ]

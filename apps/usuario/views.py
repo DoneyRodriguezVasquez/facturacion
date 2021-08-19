@@ -37,7 +37,7 @@ class Register(CreateView):
             return render(request, self.template_name, {'form': form})
 
 
-def login(request):
+def login_view(request):
     context={}
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -55,6 +55,6 @@ def login(request):
     return render(request, 'usuario/login.html', context)
 
 
-def logout(request):
+def logout_view(request):
     logout(request)
     return HttpResponseRedirect('login')
