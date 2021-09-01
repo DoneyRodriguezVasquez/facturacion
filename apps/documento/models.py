@@ -4,102 +4,106 @@ from django.db.models.fields import AutoField
 
 class Emisor(models.Model):
     id = models.AutoField(primary_key=True)
-    nombre = models.CharField('Nombre', max_length=200, blank=False, null=False)
-    identificacion = models.CharField('Identificación',max_length=200, blank=False, null=False)
-    num_identificacion = models.IntegerField('Numero de Identificación', blank=False, null=False)
-    tipo_identificacion = models.IntegerField('Tipo de Identificación',blank=False, null=False)
-    nombre_comercial = models.CharField('Nombre Comercial',max_length=500)
-    ubicacion = models.CharField('Ubicación',max_length=500, null=False, blank=False)
-    provincia = models.CharField('Provincia',max_length=200, blank=False, null=False)
-    canton = models.CharField('Cantón',max_length=200, blank=False, null=False)
-    distrito = models.CharField('Distrito',max_length=200, blank=False, null=False)
-    otras_senas = models.CharField('Otras señas',max_length=400, blank=False, null=False)
-    telefono = models.CharField('Teléfono',max_length=20, null=False, blank=False)
-    correo_electronico = models.CharField('Email',max_length=200, blank=False, null=False)   
+    Nombre = models.CharField('Nombre', max_length=200, null=True)
+    NombreComercial = models.CharField('Nombre Comercial',max_length=500, null=True)
+    CorreoElectronico = models.CharField('Email',max_length=200, blank=False, null=False)   
+    Numero = models.BigIntegerField('Numero de Identificación', blank=False, null=False)
+    Tipo = models.IntegerField('Tipo de Identificación',blank=False, null=False)
+    Provincia = models.CharField('Provincia',max_length=200, null=True)
+    Canton = models.CharField('Cantón',max_length=200, null=True)
+    Distrito = models.CharField('Distrito',max_length=200, null=True)
+    Barrio = models.CharField('Barrio',max_length=200, null=True)
+    OtrasSenas = models.CharField('Otras señas',max_length=400, null=True)
+    CodigoPais = models.IntegerField('Código País', null=True)
+    NumTelefono = models.CharField('Teléfono',max_length=20, null=False, blank=False)
 
     class Meta:
         verbose_name = 'Emisor'
         verbose_name_plural = 'Emisores'   
-        ordering = ['nombre']
+        ordering = ['Nombre']
 
     def __str__(self):
-        return self.nombre                                       
-
-class Receptor(models.Model):
-    id = models.AutoField(primary_key=True)
-    nombre = models.CharField('Nombre', max_length=200, blank=False, null=False)
-    identificacion = models.CharField('Identificación',max_length=200, blank=False, null=False)
-    num_identificacion = models.IntegerField('Numero de Identificación', blank=False, null=False)
-    tipo_identificacion = models.IntegerField('Tipo de Identificación',blank=False, null=False)
-    nombre_comercial = models.CharField('Nombre Comercial',max_length=500)
-    ubicacion = models.CharField('Ubicación',max_length=500, null=False, blank=False)
-    provincia = models.CharField('Provincia',max_length=200, blank=False, null=False)
-    canton = models.CharField('Cantón',max_length=200, blank=False, null=False)
-    distrito = models.CharField('Distrito',max_length=200, blank=False, null=False)
-    otras_senas = models.CharField('Otras señas',max_length=400, blank=False, null=False)
-    telefono = models.CharField('Teléfono',max_length=20, null=False, blank=False)
-    correo_electronico = models.CharField('Email',max_length=200, blank=False, null=False)   
-
-    class Meta:
-        verbose_name = 'Receptor'
-        verbose_name_plural = 'Receptores'
-        ordering = ['nombre']
+        return self.Nombre or ''                                   
+  
+    def get_id(self):
+        return self.id
 
 class Detalle(models.Model):
     id = models.AutoField(primary_key=True)
-    numero_linea = models.IntegerField(blank=False, null=False)
-    cantidad = models.IntegerField(blank=False, null=False)
-    detalle = models.CharField(max_length=200, blank=False, null=False)
-    precio_unitario = models.FloatField(blank=False, null=False)
-    monto_total = models.FloatField(blank=False, null=False)
-    subtotal = models.FloatField(blank=False, null=False)
-    codigo_impuesto = models.IntegerField(blank=False, null=False)
-    codigo_tarifa = models.IntegerField(blank=False, null=False)
-    tarifa = models.IntegerField(blank=False, null=False)
-    monto = models.FloatField(blank=False, null=False)
-    impuesto_neto = models.FloatField(blank=False, null=False)
-    monto_total_linea = models.FloatField(blank=False, null=False)
+    iva13_bienes = models.FloatField('iva13_bienes', null=True)
+    iva13_servicios = models.FloatField('iva13_servicios', null=True)
+    iva4_bienes = models.FloatField('iva4_bienes', null=True)
+    iva4_servicios = models.FloatField('iva4_servicios', null=True)
+    iva2_bienes = models.FloatField('iva2_bienes', null=True)
+    iva2_servicios = models.FloatField('iva2_servicios', null=True)
+    iva1_bienes = models.FloatField('iva1_bienes', null=True)
+    iva1_servicios = models.FloatField('iva1_servicios', null=True)
+    subtotal_bienes = models.FloatField('subtotal_bienes', null=True)
+    subtotal_serv = models.FloatField('subtotal_servicios', null=True)
+    total_bienes = models.FloatField('total_bienes', null=True)
+    total_serv = models.FloatField('total_servicios', null=True)
+    SubTotal = models.FloatField('Subtotal', blank=False, null=False)
+    ImpuestoNeto = models.FloatField('Impuesto Neto', blank=False, null=False)
+    MontoTotal = models.FloatField('Monto total linea', blank=False, null=False)
 
     class Meta:
         verbose_name = 'Detalle'
         verbose_name_plural = 'Detalles'
 
+    def __str__(self):
+        return str(self.id) or ''
+ 
+    
+    def get_id(self):
+        return self.id
+
 class Resumen(models.Model):
     id = models.AutoField(primary_key=True)
-    total_serv_gravados = models.FloatField(blank=False, null=False)
-    total_serv_exentos = models.FloatField(blank=False, null=False)
-    total_serv_exonerados = models.FloatField(blank=False, null=False)
-    total_mercancias_gravadas = models.FloatField(blank=False, null=False)
-    total_mercancias_exentas = models.FloatField(blank=False, null=False)
-    total_mercancias_exoneradas = models.FloatField(blank=False, null=False)
-    total_gravado = models.FloatField(blank=False, null=False)
-    total_exento = models.FloatField(blank=False, null=False)
-    total_exonerado = models.FloatField(blank=False, null=False)
-    total_venta = models.FloatField(blank=False, null=False)
-    total_descuentos = models.FloatField(blank=False, null=False)
-    total_venta_neta = models.FloatField(blank=False, null=False)
-    total_impuestos = models.FloatField(blank=False, null=False)
-    total_comprobante = models.FloatField(blank=False, null=False)
+    CodigoMoneda =  models.CharField('Código moneda', max_length=64, null=False)
+    TipoCambio = models.FloatField('Tipo de cambio', null=False)
+    TotalServGravados = models.FloatField('Total servicios gravados', null=True)
+    TotalServExentos = models.FloatField('Total servicios exentos', null=True)
+    TotalServExonerado = models.FloatField('Total servicios exonerados', null=True)
+    TotalMercanciasGravadas = models.FloatField('Total mercancias gravadas', null=True)
+    TotalMercanciasExentas = models.FloatField('Total mercancias exentas', null=True)
+    TotalMercExonerada = models.FloatField('Total mercancias exoneradas', null=True)
+    TotalGravado = models.FloatField('Total gravado', null=True)
+    TotalExento = models.FloatField('Total exento', null=True)
+    TotalExonerado = models.FloatField('Total exonerado', null=True)
+    TotalVenta = models.FloatField('Total venta', blank=False, null=False)
+    TotalDescuentos = models.FloatField('Total descuento', null=True)
+    TotalVentaNeta = models.FloatField('Total venta neta', blank=False, null=False)
+    TotalImpuesto = models.FloatField('Total impuesto', blank=False, null=False)
+    TotalIVADevuelto = models.FloatField('Total IVA Devuelto', blank=False, null=False)
+    TotalOtrosCargos = models.FloatField('Total otros cargos', null=True)
+    TotalComprobante = models.FloatField('Total comprobante', blank=False, null=False)
 
     class Meta:
         verbose_name = 'Resumen'
         verbose_name_plural = 'Resumenes'
 
+    def __str__(self):
+        return str(self.id) or ''
+    
+    def get_id(self):
+        return self.id
+
 class Factura(models.Model):
     id = models.AutoField(primary_key = True)
-    clave = models.CharField('Clave',max_length = 200, blank = False, null = False)
-    codigo_actividad = models.IntegerField('Código de actividad')
-    numero_consecutivo = models.IntegerField('Número de consecutivo')
-    fecha_emision = models.DateField('Fecha de emisión', blank = False, null = False)
-    condicion_venta = models.IntegerField('Condición de venta')
-    medio_pago = models.IntegerField('Medio de pago')
-    plazo_credito = models.IntegerField('Plazo de crédito')
-    emisor_id = models.ForeignKey(Emisor, on_delete = models.CASCADE)
-    receptor_id = models.ForeignKey(Receptor, on_delete=models.CASCADE)
-    detalle_id = models.ForeignKey(Detalle, on_delete=models.CASCADE)
-    resumen_id = models.ForeignKey(Resumen, on_delete=models.CASCADE)
+    Clave = models.CharField('Clave',max_length = 200, blank = False, null = False)
+    CodigoActividad = models.IntegerField('Código de actividad', null=True)
+    NumeroConsecutivo = models.BigIntegerField('Número de consecutivo', null=True)
+    FechaEmision = models.DateTimeField ('Fecha de emisión', blank = False, null = False)
+    CondicionVenta = models.IntegerField('Condición de venta', null=True)
+    MedioPago = models.IntegerField('Medio de pago', null=True)
+    emisor = models.ForeignKey(Emisor, on_delete = models.CASCADE)
+    detalle = models.ForeignKey(Detalle, on_delete=models.CASCADE)
+    resumen = models.ForeignKey(Resumen, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Factura'
         verbose_name_plural = 'Facturas'
     
+    def __str__(self):
+        return str(self.CodigoActividad) if self.CodigoActividad else ''
+        

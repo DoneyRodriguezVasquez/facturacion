@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 {% load static %}
-{% block body %}
+{% block content %}
     <form method="post">
         {% csrf_token %}
         <img class="mb-4" src="{% static  'img/avatar.png'%}" alt="avatar" width="200" height="200" style="margin: 0 auto;">

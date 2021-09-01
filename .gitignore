@@ -9,6 +9,7 @@ __pycache__/
 local_settings.py
 db.sqlite3
 media
+migrations
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
 # in your Git repository. Update and uncomment the following line accordingly.
@@ -42,6 +43,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+*/*.pyc 
+models.cpython-39.pyc 
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -135,3 +138,15 @@ dmypy.json
 .pyre/
 
 # End of https://www.gitignore.io/api/django
+
+# bootstrap
+*.map 
+*.min.css  
+*.min.js 
+*.bundle.js 
+bootstrap*.css 
+bootstrap*.js
+apps/documento/__pycache__/admin.cpython-39.pyc
+apps/documento/__pycache__/models.cpython-39.pyc
+facturacion/__pycache__/settings.cpython-39.pyc
+facturacion/__pycache__/urls.cpython-39.pyc
