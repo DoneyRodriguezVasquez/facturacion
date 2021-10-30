@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'apps.documento',
     'apps.usuario',
     'apps.home',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

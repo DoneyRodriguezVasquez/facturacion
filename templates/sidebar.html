@@ -2,74 +2,65 @@
   <div class="sidebar-sticky pt-3">
     <ul class="nav flex-column">
       <li class="nav-item">
-        <a class="nav-link active" href="#">
-          <span data-feather="home"></span>
-          Inicio <span class="sr-only">(current)</span>
+        <a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+          <i class="bi bi-house ml-2 mr-2"></i>Inicio
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{% url 'documento:recepcion' %}">
-          <span data-feather="file"></span>
-          Recepción de documentos
+        <a class="dropdown-toggle nav-link" data-toggle="collapse" href="#homeSubmenu" aria-expanded="false">
+          <i class="bi bi-file-earmark-bar-graph ml-2 mr-2"></i>Recepción de Facturas
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="shopping-cart"></span>
-          Products
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="users"></span>
-          Customers
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="bar-chart-2"></span>
-          Reportes
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="layers"></span>
-          Integrations
-        </a>
+        <ul class="collapse list-unstyled" id="homeSubmenu">
+          <li>
+            <a 
+              class="dropdown-item {% if request.resolver_match.url_name == 'recepcion' %}active{% endif %}"
+              href="{% url 'documento:recepcion' %}">
+              <i class="bi bi-file-earmark-minus ml-2 mr-2"></i>Facturas de compras
+            </a>
+          </li>
+          <li>
+            <a 
+              class="dropdown-item"
+              href="#">
+              <i class="bi bi-file-earmark-plus ml-2 mr-2"></i>Facturas de ventas
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
 
-    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-      <span>Saved reports</span>
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 ml-2 text-muted">
+      <span>Reportes</span>
       <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
         <span data-feather="plus-circle"></span>
       </a>
     </h6>
     <ul class="nav flex-column mb-2">
       <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text"></span>
-          Current month
+        <a class="dropdown-toggle nav-link" data-toggle="collapse" href="#iva" aria-expanded="false">
+          <i class="bi bi-bar-chart ml-2 mr-2"></i>
+          D-104 IVA
         </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text"></span>
-          Last quarter
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text"></span>
-          Social engagement
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">
-          <span data-feather="file-text"></span>
-          Year-end sale
-        </a>
+        <ul class="collapse list-unstyled" id="iva">
+          <li>
+            <a 
+              class="dropdown-item"
+              href="{% url 'documento:reporte_ventas' %}">
+              <i class="bi bi-file-earmark-minus ml-2 mr-2"></i>Ventas
+            </a>
+          </li>
+          <li>
+            <a 
+              class="dropdown-item"
+              href="{% url 'documento:reporte_compras' %}">
+              <i class="bi bi-file-earmark-plus ml-2 mr-2"></i>Compras
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
 </nav>
+<script>
+  
+</script>

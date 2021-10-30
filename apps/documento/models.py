@@ -1,13 +1,12 @@
 from django.db import models
-from django.db.models.fields import AutoField
+from django.conf import settings
 
 
 class Emisor(models.Model):
-    id = models.AutoField(primary_key=True)
     Nombre = models.CharField('Nombre', max_length=200, null=True)
     NombreComercial = models.CharField('Nombre Comercial',max_length=500, null=True)
     CorreoElectronico = models.CharField('Email',max_length=200, blank=False, null=False)   
-    Numero = models.BigIntegerField('Numero de Identificación', blank=False, null=False)
+    Numero = models.BigIntegerField('Numero de Identificación',primary_key=True, unique=True, blank=False, null=False)
     Tipo = models.IntegerField('Tipo de Identificación',blank=False, null=False)
     Provincia = models.CharField('Provincia',max_length=200, null=True)
     Canton = models.CharField('Cantón',max_length=200, null=True)
@@ -21,12 +20,13 @@ class Emisor(models.Model):
         verbose_name = 'Emisor'
         verbose_name_plural = 'Emisores'   
         ordering = ['Nombre']
+        
 
     def __str__(self):
-        return self.Nombre or ''                                   
+        return f'{str(self.Nombre)}'                                 
   
     def get_id(self):
-        return self.id
+        return self.Numero
 
 class Detalle(models.Model):
     id = models.AutoField(primary_key=True)
@@ -74,7 +74,7 @@ class Resumen(models.Model):
     TotalDescuentos = models.FloatField('Total descuento', null=True)
     TotalVentaNeta = models.FloatField('Total venta neta', blank=False, null=False)
     TotalImpuesto = models.FloatField('Total impuesto', blank=False, null=False)
-    TotalIVADevuelto = models.FloatField('Total IVA Devuelto', blank=False, null=False)
+    TotalIVADevuelto = models.FloatField('Total IVA Devuelto', blank=True, null=True)
     TotalOtrosCargos = models.FloatField('Total otros cargos', null=True)
     TotalComprobante = models.FloatField('Total comprobante', blank=False, null=False)
 
@@ -89,11 +89,12 @@ class Resumen(models.Model):
         return self.id
 
 class Factura(models.Model):
-    id = models.AutoField(primary_key = True)
-    Clave = models.CharField('Clave',max_length = 200, blank = False, null = False)
+    #id = models.AutoField(primary_key = True)
+    Clave = models.CharField('Clave',max_length = 200, primary_key = True, unique = True, blank = False, null = False)
     CodigoActividad = models.IntegerField('Código de actividad', null=True)
     NumeroConsecutivo = models.BigIntegerField('Número de consecutivo', null=True)
     FechaEmision = models.DateTimeField ('Fecha de emisión', blank = False, null = False)
+    fecha_carga = models.DateTimeField('Fecha de carga', blank = False, null = False)
     CondicionVenta = models.IntegerField('Condición de venta', null=True)
     MedioPago = models.IntegerField('Medio de pago', null=True)
     emisor = models.ForeignKey(Emisor, on_delete = models.CASCADE)
@@ -105,5 +106,5 @@ class Factura(models.Model):
         verbose_name_plural = 'Facturas'
     
     def __str__(self):
-        return str(self.CodigoActividad) if self.CodigoActividad else ''
+        return str(self.NumeroConsecutivo) if self.NumeroConsecutivo else ''
         
